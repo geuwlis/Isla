@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Isla 💌</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #f8cdda 0%, #fde9d9 50%, #e8d5f2 100%);
+    font-family: 'Segoe UI', sans-serif; overflow: hidden;
+  }
+  .scene { perspective: 1200px; cursor: pointer; }
+  .envelope {
+    position: relative; width: 320px; height: 220px;
+    background: linear-gradient(145deg, #ffd6e0, #ffb6c9);
+    border-radius: 8px; box-shadow: 0 20px 50px rgba(200,120,150,0.4);
+    transition: transform 0.6s ease;
+  }
+  .envelope:hover { transform: translateY(-6px); }
+  .envelope::before {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 0;
+    border-left: 160px solid #ff9fb8;
+    border-right: 160px solid #ff9fb8;
+    border-top: 110px solid #ffc2d4;
+    border-radius: 0 0 8px 8px; z-index: 3; pointer-events: none;
+  }
+  .flap {
+    position: absolute; top: 0; left: 0; width: 0; height: 0;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-top: 130px solid #ffb0c8;
+    border-radius: 8px 8px 0 0;
+    transform-origin: top center;
+    transition: transform 0.8s ease, z-index 0s 0.4s;
+    z-index: 4;
+  }
+  .envelope.open .flap { transform: rotateX(180deg); z-index: 1; }
+  .seal {
+    position: absolute; top: 95px; left: 50%; transform: translateX(-50%);
+    width: 50px; height: 50px;
+    background: radial-gradient(circle at 30% 30%, #ff6b8a, #c9184a);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 24px; z-index: 5;
+    box-shadow: 0 4px 10px rgba(150,20,50,0.4);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .envelope.open .seal { opacity: 0; transform: translateX(-50%) scale(0); }
+  .hint {
+    position: absolute; bottom: -45px; width: 100%; text-align: center;
+    color: #b05a78; font-size: 14px; letter-spacing: 1px;
+    animation: bounce 1.6s infinite;
+  }
+  @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
+  .card {
+    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    padding: 20px; background: rgba(255,240,245,0.85); backdrop-filter: blur(6px);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.6s ease 0.4s, visibility 0s 1s; z-index: 10;
+  }
+  .card.show { opacity: 1; visibility: visible; transition: opacity 0.6s ease 0.4s, visibility 0s 0.4s; }
+  .card-inner {
+    background: #fffdf8; max-width: 420px; width: 100%;
+    border-radius: 18px; padding: 28px 26px;
+    box-shadow: 0 25px 60px rgba(180,100,130,0.35); text-align: center;
+    transform: translateY(40px) scale(0.9);
+    transition: transform 0.6s ease 0.5s;
+    max-height: 90vh; overflow-y: auto;
+    border: 2px dashed #ffc2d4;
+  }
+  .card.show .card-inner { transform: translateY(0) scale(1); }
+  .card-inner h1 { font-size: 22px; color: #c9184a; margin-bottom: 14px; font-weight: 700; }
+  .card-inner p { font-size: 15px; line-height: 1.7; color: #5a4a50; margin-bottom: 12px; }
+  .photo {
+    width: 100%; max-width: 320px; border-radius: 12px; margin: 14px auto;
+    display: block; box-shadow: 0 8px 20px rgba(200,120,150,0.35);
+    border: 5px solid #fff; outline: 2px solid #ffc2d4;
+  }
+  .signature { margin-top: 18px; font-style: italic; color: #b05a78; font-size: 15px; }
+  .close-btn {
+    margin-top: 20px; padding: 10px 26px; border: none; border-radius: 30px;
+    background: linear-gradient(135deg, #ff6b8a, #c9184a);
+    color: #fff; font-size: 14px; cursor: pointer;
+    box-shadow: 0 6px 16px rgba(200,40,80,0.35); transition: transform 0.2s;
+  }
+  .close-btn:hover { transform: scale(1.05); }
+  .petal {
+    position: fixed; top: -30px; font-size: 18px; pointer-events: none;
+    z-index: 1; animation: fall linear forwards; opacity: 0.8;
+  }
+  @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+</style>
+</head>
+<body>
+
+<div class="scene" id="scene">
+  <div class="envelope" id="envelope">
+    <div class="flap"></div>
+    <div class="seal">❤</div>
+    <div class="hint">tap for open 💌</div>
+  </div>
+</div>
+
+<div class="card" id="card">
+  <div class="card-inner">
+    <h1>Thank You, Sweetheart 💌</h1>
+
+    <p>
+      Thank you for spending your time with me, sweetheart. And thank you
+      for being such a sweet and pretty girlfriend throughout our little
+      session. I genuinely enjoyed every moment with you, and I hope you
+      felt just as loved and appreciated. You're such a lovely person, and
+      I'm really glad I got to spend this time with you. Sending you lots
+      of love and kisses!
+    </p>
+
+
+    <img class="photo" id="foto"
+         src="rhela.jpg"
+         alt="Foto bareng kita"
+         onerror="this.src='https://placehold.co/320x240/ffd6e0/c9184a?text=Foto+Bareng'">
+
+    <p>
+      Sekali lagi, thank you for being my lovely girl. I hope we get to
+      share another sweet moment together soon. Take care, pretty girl!
+    </p>
+
+    <div class="signature">— With love, Rhea 💕</div>
+    
+    <button class="close-btn" onclick="closeCard()">Tutup 💗</button>
+  </div>
+</div>
+
+<script>
+  const scene = document.getElementById('scene');
+  const envelope = document.getElementById('envelope');
+  const card = document.getElementById('card');
+  let opened = false;
+
+  scene.addEventListener('click', () => {
+    if (opened) return;
+    opened = true;
+    envelope.classList.add('open');
+    spawnPetals();
+    setTimeout(() => card.classList.add('show'), 700);
+  });
+
+  function closeCard() {
+    card.classList.remove('show');
+    setTimeout(() => {
+      envelope.classList.remove('open');
+      opened = false;
+    }, 600);
+  }
+
+  function spawnPetals() {
+    const emojis = ['💗', '🌸', '💖', '✨', '💕'];
+    for (let i = 0; i < 18; i++) {
+      setTimeout(() => {
+        const p = document.createElement('div');
+        p.className = 'petal';
+        p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.animationDuration = (3 + Math.random() * 3) + 's';
+        p.style.fontSize = (14 + Math.random() * 14) + 'px';
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 7000);
+      }, i * 150);
+    }
+  }
+</script>
+
+</body>
+</html>
